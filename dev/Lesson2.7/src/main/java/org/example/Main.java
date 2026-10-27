@@ -1,9 +1,7 @@
 package org.example;
 public class Main {
   public static void main(String[] args) {
-        System.out.println(arithmeticOperations(5,7,'/'));
     }
-
     public static int findFactorial(int x){
         if (x < 0) {
             throw new IllegalArgumentException("Число не может быть отрицательным");
@@ -18,6 +16,9 @@ public class Main {
         return result;
     }
     public static double triangleArea(double base, double height) {
+      if(base <= 0 || height <= 0){
+          throw new IllegalArgumentException("Основание и высота должны быть больше нуля");
+      }
         return base * height / 2;
     }
     public static double arithmeticOperations(int a, int b, char c){
