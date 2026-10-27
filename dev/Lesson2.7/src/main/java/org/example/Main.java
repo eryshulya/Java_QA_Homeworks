@@ -21,7 +21,6 @@ public class Main {
         return base * height / 2;
     }
     public static double arithmeticOperations(int a, int b, char c){
-
       if(c == '*'){
           return a*b;
       }
