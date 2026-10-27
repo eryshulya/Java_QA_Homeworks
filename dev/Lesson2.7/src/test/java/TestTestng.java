@@ -5,14 +5,22 @@ import org.testng.annotations.DataProvider;
 import static org.testng.Assert.expectThrows;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import org.testng.Assert;
 public class TestTestng {
-    @Test
-    public void checkFactorialTest1(){
-        assertTrue(Main.findFactorial(5) == 120);
+    @DataProvider(name = "factorialData")
+    public Object[][] factorialData() {
+        return new Object[][]{
+                {0, 1},
+                {1, 1},
+                {3, 6},
+                {5, 120},
+                {7, 5040}
+        };
     }
-    @Test
-    public void checkFactorialTest2(){
-        assertTrue(Main.findFactorial(0) == 1);
+    @Test(dataProvider = "factorialData")
+    public void testFindFactorial(int x, int expected) {
+        int result = Main.findFactorial(x);
+       assertEquals(result, expected);
     }
 @Test
     public void factorialTest3(){
@@ -22,21 +30,38 @@ public class TestTestng {
     );
  assertEquals(exception.getMessage(), "Факториал отрицательного числа не определён");
 }
-@Test
-    public void triangleArea(){
-        double value = (3*5)/2.0;
-        assertEquals(Main.triangleArea(3,5),value);
-}
-/*@Test
-    public void arithmeticOperations(){
-    SoftAssert softAssert = new SoftAssert();
-    softAssert.assertEquals(Main.arithmeticOperations(3,5,'+'),8,"Ошибка в сложении");
-    softAssert.assertEquals(Main.arithmeticOperations(3,-5,'-'),8,"Ошибка в вычитании");
-    softAssert.assertEquals(Main.arithmeticOperations(1,8,'*'),1*8,"Ошибка в умножении");
-    softAssert.assertEquals(Main.arithmeticOperations(1,8,'/'),1/8,"Ошибка в делении");
+    @DataProvider(name = "triangleAreaData")
+    public Object[][] triangleAreaData() {
+        return new Object[][]{
+                {4.0, 6.0, 12.0},
+                {5.0, 8.0, 20.0},
+                {3.0, 3.0, 4.5},
+                {10.0, 5.0, 25.0}
+        };
+    }
 
-}
- */
+    @Test(dataProvider = "triangleAreaData")
+    public void testTriangleArea(double base, double height, double expected) {
+        double result = Main.triangleArea(base, height);
+        assertEquals(result, expected, 0.001);
+    }
+    @DataProvider(name = "triangleAreaExceptionData")
+    public Object[][] triangleAreaExceptionData() {
+        return new Object[][]{
+                {-3.0, 0.0},
+                {0.0, 0.0},
+                {10.0, 0.0},
+                {-4.0, -6.0},
+                {4.0, -8.0}
+        };
+    }
+
+    @Test(dataProvider = "triangleAreaExceptionData")
+    public void testTriangleAreaThrowsException(double base, double height) {
+        Assert.expectThrows(IllegalArgumentException.class,
+                () -> Main.triangleArea(base, height));
+    }
+
 @DataProvider(name = "subtractData")
 public Object[][] subtractData() {
     return new Object[][] {
@@ -46,9 +71,9 @@ public Object[][] subtractData() {
     };
 }
     @Test(dataProvider = "subtractData")
-    public void testSubtract(int a, int b, int expected) {
+    public void testSubtract(int a, int b, double expected) {
       double result = Main.arithmeticOperations(a,b,'-');
-   assertEquals(result,expected);
+   assertEquals(result,expected,0.001);
     }
     @DataProvider(name = "additionData")
     public Object[][] additionData() {
@@ -59,9 +84,9 @@ public Object[][] subtractData() {
         };
     }
     @Test(dataProvider = "additionData")
-    public void testAddition(int a, int b, int expected){
+    public void testAddition(int a, int b, double expected){
     double result = Main.arithmeticOperations(a,b,'+');
-    assertEquals(result,expected);
+    assertEquals(result,expected,0.001);
     }
     @DataProvider(name = "multiplicationData")
     public Object[][] multiplicationData(){
@@ -76,7 +101,7 @@ public Object[][] subtractData() {
     @Test(dataProvider = "multiplicationData")
     public void testMultiplication(int a, int b, double expected){
     double result = Main.arithmeticOperations(a,b,'*');
-    assertEquals(result,expected);
+    assertEquals(result,expected,0.001);
     }
     @DataProvider(name = "divideData")
     public Object[][] divideData(){
@@ -92,7 +117,7 @@ public Object[][] subtractData() {
     @Test(dataProvider = "divideData")
     public void testDivide(int a,int b, double expected){
     double result = Main.arithmeticOperations(a,b,'/');
-    assertEquals(result,expected);
+    assertEquals(result,expected,0.001);
     }
 @Test(expectedExceptions = ArithmeticException.class)
     public void testDivisionByZero(){

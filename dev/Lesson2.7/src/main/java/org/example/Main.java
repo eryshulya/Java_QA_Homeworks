@@ -6,7 +6,7 @@ public class Main {
 
     public static int findFactorial(int x){
         if (x < 0) {
-            throw new IllegalArgumentException("Число не может быть отрицательным");
+            throw new IllegalArgumentException("Факториал отрицательного числа не определён");
         }
       if(x == 0){
           return 1;
@@ -18,6 +18,9 @@ public class Main {
         return result;
     }
     public static double triangleArea(double base, double height) {
+      if(base <=0 || height <= 0){
+          throw new IllegalArgumentException("Основание и высота должны быть больше нуля");
+      }
         return base * height / 2;
     }
     public static double arithmeticOperations(int a, int b, char c){
