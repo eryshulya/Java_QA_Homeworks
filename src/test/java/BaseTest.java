@@ -6,7 +6,6 @@ import java.time.Duration;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeOptions;
 public class BaseTest {
-
     protected WebDriver driver;
     @BeforeEach
     void setUp() {

@@ -5,7 +5,7 @@ import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class CommunicationServicesTest {
+public class CommunicationServices {
    private By blockTitle = By.xpath("//h2[contains(., 'Онлайн пополнение')]");
     private By acceptCookiesButton = By.id("cookie-agree");
     private WebDriver driver;
@@ -15,7 +15,7 @@ public class CommunicationServicesTest {
     private By masterCardSecureLogo = By.cssSelector("img[alt='MasterCard Secure Code']");
     private By belkartLogo = By.cssSelector("img[alt='Белкарт']");
     private By moreAboutServiceLink = By.linkText("Подробнее о сервисе");
-    public CommunicationServicesTest(WebDriver driver){
+    public CommunicationServices(WebDriver driver){
         this.driver = driver;
     }
     public void open(){
