@@ -9,7 +9,6 @@ public class BaseTest {
     protected WebDriver driver;
     @BeforeEach
     void setUp() {
-        //меняла стратегию загрузки на EAGER, очень медленно грузились автотесты на Normal
         ChromeOptions options = new ChromeOptions();
         options.setPageLoadStrategy(PageLoadStrategy.EAGER);
         driver = new ChromeDriver(options);

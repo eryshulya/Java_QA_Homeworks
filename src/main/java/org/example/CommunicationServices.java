@@ -26,7 +26,6 @@ public class CommunicationServices {
         wait.until(ExpectedConditions.elementToBeClickable(acceptCookiesButton)).click();
     }
     public boolean comparingBlockTitle() {
-        //"ОНЛАЙН ПОПОЛНЕНИЕ БЕЗ КОМИССИИ" - тест не работает без символа переноса строки
         String header = driver.findElement(blockTitle).getText();
         String expectedTitle = "ОНЛАЙН ПОПОЛНЕНИЕ\n" +
                 "БЕЗ КОМИССИИ";

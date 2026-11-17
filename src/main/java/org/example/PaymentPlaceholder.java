@@ -23,7 +23,7 @@ public class PaymentPlaceholder {
     );
   private By installmentAccount = By.id("score-instalment");
     private By debtOption = By.xpath(
-            "//li[contains(@class,'select__item')][.//p[text()='Задолженность']]"
+            "//p[contains(@class, 'select__option') and normalize-space()='Задолженность']"
     );
   private By debtAccount = By.id("score-arrears");
    public PaymentPlaceholder(WebDriver driver){
@@ -65,8 +65,10 @@ public class PaymentPlaceholder {
 
     public void selectDebt() {
         wait.until(ExpectedConditions.elementToBeClickable(paymentDropdownButton)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(debtOption));
-        wait.until(ExpectedConditions.elementToBeClickable(debtOption)).click();
+        WebElement option = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(debtOption)
+        );
+        option.click();
         wait.until(ExpectedConditions.textToBePresentInElementLocated(
                 paymentDropdownValue, "Задолженность"
         ));

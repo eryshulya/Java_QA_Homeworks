@@ -3,8 +3,9 @@ import org.example.CommunicationServices;
 import org.example.CommunicationServicesPaymentPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 public class CommunicationServicesPaymentPageTest extends BaseTest {
     CommunicationServicesPaymentPage servicesPaymentPage;
     Authorization authorization;
@@ -24,25 +25,24 @@ public class CommunicationServicesPaymentPageTest extends BaseTest {
         authorization.clickContinue();
         servicesPaymentPage.switchToPaymentFrame();
     }
-    //Заполнить поля и проверить работу кнопки «Продолжить» (проверяем только вариант «Услуги связи», номер для теста 297777777)
-    @Test
-    void checkIsWorkingContinue (){
+     @Test
+    void checkIsWorkingContinue() {
         preparePaymentWindow();
-        assertEquals("Номер карты", servicesPaymentPage.getNumberOfCard());
+        assertAll(
+                () -> assertEquals("Номер карты", servicesPaymentPage.getNumberOfCard()),
+                () -> assertEquals("55.00 BYN", servicesPaymentPage.getPaymentAmount())
+        );
     }
-    //сравниваем номер телефона
     @Test
     void checkPhoneNumber(){
         preparePaymentWindow();
         assertEquals("375297777777",servicesPaymentPage.getPhoneNumber());
     }
-    //сраниваем сумму1
     @Test
     void checkPaymentAmount(){
         preparePaymentWindow();
         assertEquals("55.00 BYN",servicesPaymentPage.getPaymentAmount());
     }
-    //сравниваем сумму с кнопки
     @Test
     void checkPaymentAmountButton(){
         preparePaymentWindow();
@@ -68,7 +68,6 @@ public class CommunicationServicesPaymentPageTest extends BaseTest {
         preparePaymentWindow();
         assertEquals("CVC",servicesPaymentPage.getCVCOfCard());
     }
-    //имя и фамилия
     @Test
     void checkCardHolderName(){
         preparePaymentWindow();
