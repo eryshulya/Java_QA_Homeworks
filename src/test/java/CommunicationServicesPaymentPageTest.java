@@ -10,12 +10,14 @@ public class CommunicationServicesPaymentPageTest extends BaseTest {
     CommunicationServicesPaymentPage servicesPaymentPage;
     Authorization authorization;
     CommunicationServices services;
+
     @BeforeEach
-    void open(){
+    void open() {
         servicesPaymentPage = new CommunicationServicesPaymentPage(driver);
         authorization = new Authorization(driver);
         services = new CommunicationServices(driver);
     }
+
     private void preparePaymentWindow() {
         services.open();
         services.setAcceptCookies();
@@ -25,6 +27,7 @@ public class CommunicationServicesPaymentPageTest extends BaseTest {
         authorization.clickBankCardButton();
         servicesPaymentPage.switchToPaymentFrame();
     }
+
     @Test
     void checkPaymentInformation() {
         preparePaymentWindow();
@@ -34,6 +37,7 @@ public class CommunicationServicesPaymentPageTest extends BaseTest {
                 () -> assertEquals("375297777777", servicesPaymentPage.getPhoneNumber())
         );
     }
+
     @Test
     void checkCardFields() {
         preparePaymentWindow();
@@ -45,24 +49,16 @@ public class CommunicationServicesPaymentPageTest extends BaseTest {
                 () -> assertEquals("Имя и фамилия на карте", servicesPaymentPage.getCardHolderName())
         );
     }
+
     @Test
-   void isDisplayedCardVisa(){
+    void checkPaymentSystemsIcons() {
         preparePaymentWindow();
-        assertTrue(servicesPaymentPage.isDisplayedVisa());
+
+        assertAll(
+                () -> assertTrue(servicesPaymentPage.isDisplayedVisa()),
+                () -> assertTrue(servicesPaymentPage.isDisplayedMastercard()),
+                () -> assertTrue(servicesPaymentPage.isDisplayedBelkartIcon()),
+                () -> assertTrue(servicesPaymentPage.isDisplayedMir())
+        );
     }
-@Test
-    void isDisplayedMasterCard(){
-    preparePaymentWindow();
-    assertTrue(servicesPaymentPage.isDisplayedMastercard());
-}
-@Test
-    void isDisplayedCardBelkartIcon(){
-    preparePaymentWindow();
-    assertTrue(servicesPaymentPage.isDisplayedBelkartIcon());
-}
-@Test
-    void isDisplayedCardMirIcon(){
-    preparePaymentWindow();
-        assertTrue(servicesPaymentPage.isDisplayedMir());
-}
 }
