@@ -15,17 +15,20 @@ public class PaymentPlaceholder {
   private WebDriver driver;
   private By phonePlaceholder = By.id("connection-phone");
     private By homeInternetOption = By.xpath(
-            "//li[contains(@class,'select__item')][.//p[text()='Домашний интернет']]"
+            "//p[contains(@class,'select__option') and normalize-space()='Домашний интернет']"
     );
-  private By internetPhone = By.id("internet-phone");
+
     private By installmentOption = By.xpath(
-            "//li[contains(@class,'select__item')][.//p[text()='Рассрочка']]"
+            "//p[contains(@class,'select__option') and normalize-space()='Рассрочка']"
+    );
+
+    private By debtOption = By.xpath(
+            "//p[contains(@class,'select__option') and normalize-space()='Задолженность']"
     );
   private By installmentAccount = By.id("score-instalment");
-    private By debtOption = By.xpath(
-            "//p[contains(@class, 'select__option') and normalize-space()='Задолженность']"
-    );
   private By debtAccount = By.id("score-arrears");
+  private By paymentDropdownList = By.cssSelector("ul.select__list");
+    private By internetPhone = By.id("internet-phone");
    public PaymentPlaceholder(WebDriver driver){
        this.driver = driver;
        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -37,8 +40,13 @@ public class PaymentPlaceholder {
         return driver.findElement(phonePlaceholder).getAttribute("placeholder");
     }
 
-    public String getSubscriberNumber(){
-        return driver.findElement(internetPhone).getAttribute("placeholder");
+    public String getSubscriberNumber() {
+        return wait.until(driver -> {
+            String placeholder = driver.findElement(internetPhone)
+                    .getAttribute("placeholder");
+
+            return "Номер абонента".equals(placeholder) ? placeholder : null;
+        });
     }
     public String getInstallAccountNumber() {
         return driver.findElement(installmentAccount).getAttribute("placeholder");
@@ -46,8 +54,12 @@ public class PaymentPlaceholder {
     public String getDebtAccountPlaceholder(){
         return driver.findElement(debtAccount).getAttribute("placeholder");
     }
+
     public void selectHomeInternet() {
         wait.until(ExpectedConditions.elementToBeClickable(paymentDropdownButton)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(paymentDropdownList));
+        wait.until(ExpectedConditions.attributeToBe(paymentDropdownList, "style",
+                "opacity: 1; visibility: inherit; height: auto;"));
         wait.until(ExpectedConditions.elementToBeClickable(homeInternetOption)).click();
         wait.until(ExpectedConditions.textToBePresentInElementLocated(
                 paymentDropdownValue, "Домашний интернет"
@@ -56,8 +68,13 @@ public class PaymentPlaceholder {
 
     public void selectInstallment() {
         wait.until(ExpectedConditions.elementToBeClickable(paymentDropdownButton)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(installmentOption));
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(paymentDropdownList));
+        wait.until(ExpectedConditions.attributeToBe(paymentDropdownList, "style",
+                "opacity: 1; visibility: inherit; height: auto;"));
+
         wait.until(ExpectedConditions.elementToBeClickable(installmentOption)).click();
+
         wait.until(ExpectedConditions.textToBePresentInElementLocated(
                 paymentDropdownValue, "Рассрочка"
         ));
@@ -65,12 +82,16 @@ public class PaymentPlaceholder {
 
     public void selectDebt() {
         wait.until(ExpectedConditions.elementToBeClickable(paymentDropdownButton)).click();
-        WebElement option = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(debtOption)
-        );
-        option.click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(paymentDropdownList));
+        wait.until(ExpectedConditions.attributeToBe(paymentDropdownList, "style",
+                "opacity: 1; visibility: inherit; height: auto;"));
+
+        wait.until(ExpectedConditions.elementToBeClickable(debtOption)).click();
+
         wait.until(ExpectedConditions.textToBePresentInElementLocated(
                 paymentDropdownValue, "Задолженность"
         ));
     }
+
 }

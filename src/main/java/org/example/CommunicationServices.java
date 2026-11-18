@@ -4,7 +4,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
 public class CommunicationServices {
    private By blockTitle = By.xpath("//h2[contains(., 'Онлайн пополнение')]");
     private By acceptCookiesButton = By.id("cookie-agree");
@@ -14,6 +13,7 @@ public class CommunicationServices {
     private By masterCardLogo = By.cssSelector("img[alt='MasterCard']");
     private By masterCardSecureLogo = By.cssSelector("img[alt='MasterCard Secure Code']");
     private By belkartLogo = By.cssSelector("img[alt='Белкарт']");
+    private By krokLogo = By.cssSelector("img[alt='KROK']");
     private By moreAboutServiceLink = By.linkText("Подробнее о сервисе");
     public CommunicationServices(WebDriver driver){
         this.driver = driver;
@@ -45,6 +45,9 @@ public class CommunicationServices {
     }
     public boolean isDisplayedBelkartLogo(){
         return driver.findElement(belkartLogo).isDisplayed();
+    }
+    public boolean isDisplayedKrokLogo(){
+        return driver.findElement(krokLogo).isDisplayed();
     }
     public String moreAboutService() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));

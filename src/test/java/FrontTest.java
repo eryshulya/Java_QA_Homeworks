@@ -24,7 +24,8 @@ public class FrontTest extends BaseTest {
                 () -> assertTrue(page.isDisplayedVerifiedVisaLogo()),
                 () -> assertTrue(page.isDisplayedMasterCardLogo()),
                 () -> assertTrue(page.isDisplayedMasterCardSecureLogo()),
-                () -> assertTrue(page.isDisplayedBelkartLogo())
+                () -> assertTrue(page.isDisplayedBelkartLogo()),
+                () -> assertTrue(page.isDisplayedKrokLogo())
         );
     }
     @Test

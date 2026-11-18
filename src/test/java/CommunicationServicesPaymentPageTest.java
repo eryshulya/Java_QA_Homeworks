@@ -22,56 +22,28 @@ public class CommunicationServicesPaymentPageTest extends BaseTest {
         authorization.enterNumber("297777777");
         authorization.enterSum("55");
         authorization.enterEmail("ggg_gt@mail.ru");
-        authorization.clickContinue();
+        authorization.clickBankCardButton();
         servicesPaymentPage.switchToPaymentFrame();
     }
-     @Test
-    void checkIsWorkingContinue() {
+    @Test
+    void checkPaymentInformation() {
         preparePaymentWindow();
         assertAll(
-                () -> assertEquals("Номер карты", servicesPaymentPage.getNumberOfCard()),
-                () -> assertEquals("55.00 BYN", servicesPaymentPage.getPaymentAmount())
+                () -> assertEquals("55.00 BYN", servicesPaymentPage.getPaymentAmount()),
+                () -> assertEquals("55.00 BYN", servicesPaymentPage.getPaymentAmountButton()),
+                () -> assertEquals("375297777777", servicesPaymentPage.getPhoneNumber())
         );
     }
     @Test
-    void checkPhoneNumber(){
+    void checkCardFields() {
         preparePaymentWindow();
-        assertEquals("375297777777",servicesPaymentPage.getPhoneNumber());
-    }
-    @Test
-    void checkPaymentAmount(){
-        preparePaymentWindow();
-        assertEquals("55.00 BYN",servicesPaymentPage.getPaymentAmount());
-    }
-    @Test
-    void checkPaymentAmountButton(){
-        preparePaymentWindow();
-        assertEquals("55.00 BYN",servicesPaymentPage.getPaymentAmountButton());
-    }
-    @Test
-    void checkNumberOfCard(){
-        preparePaymentWindow();
-        assertEquals("Номер карты",servicesPaymentPage.getNumberOfCard());
-    }
-    @Test
-    void checkExpirationDate() {
-        preparePaymentWindow();
-        assertEquals("Срок действия",servicesPaymentPage.getExpirationDate());
-    }
-    @Test
-    void checkExpirationDatePlaceholder(){
-        preparePaymentWindow();
-        assertEquals("ММ / ГГ",servicesPaymentPage.getExpirationDatePlaceholder());
-    }
-    @Test
-    void checkCVCOfCard(){
-        preparePaymentWindow();
-        assertEquals("CVC",servicesPaymentPage.getCVCOfCard());
-    }
-    @Test
-    void checkCardHolderName(){
-        preparePaymentWindow();
-        assertEquals("Имя и фамилия на карте",servicesPaymentPage.getCardHolderName());
+        assertAll(
+                () -> assertEquals("Номер карты", servicesPaymentPage.getNumberOfCard()),
+                () -> assertEquals("Срок действия", servicesPaymentPage.getExpirationDate()),
+                () -> assertEquals("ММ / ГГ", servicesPaymentPage.getExpirationDatePlaceholder()),
+                () -> assertEquals("CVC", servicesPaymentPage.getCVCOfCard()),
+                () -> assertEquals("Имя и фамилия на карте", servicesPaymentPage.getCardHolderName())
+        );
     }
     @Test
    void isDisplayedCardVisa(){

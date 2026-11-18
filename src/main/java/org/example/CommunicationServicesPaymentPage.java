@@ -34,7 +34,6 @@ public class CommunicationServicesPaymentPage {
         String text = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(paymentInfo)
         ).getText();
-
         return text.split("Номер:")[1].trim();
     }
     public String getPaymentAmount(){

@@ -9,7 +9,7 @@ public class Authorization {
     private By phoneNumber = By.id("connection-phone");
     private By paymentSum = By.id("connection-sum");
     private By emailField = By.id("connection-email");
-    private By continueButton = By.cssSelector("button.button__default");
+    private By bankCardButton = By.cssSelector("button[data-method='card']");
     public void enterNumber(String number) {
         driver.findElement(phoneNumber).sendKeys(number);
     }
@@ -19,7 +19,7 @@ public class Authorization {
     public void enterEmail(String email) {
         driver.findElement(emailField).sendKeys(email);
     }
-    public void clickContinue() {
-        driver.findElement(continueButton).click();
+    public void clickBankCardButton() {
+        driver.findElement(bankCardButton).click();
     }
 }
